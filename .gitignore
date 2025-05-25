@@ -1,0 +1,29 @@
+# Dependencias
+node_modules/
+frontend/node_modules
+
+# Logs
+logs/
+*.log
+
+# Directorios del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.tmp
+*.swp
+
+# Archivos de entorno
+.env
+
+# Salida de compilación
+dist/
+build/
+
+# IDEs
+.vscode/
+.idea/
+
+# Cobertura de pruebas
+coverage/
