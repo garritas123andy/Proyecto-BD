@@ -1,70 +1,91 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
-import PerroForm from './templates/PerroForm';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate, Navigate} from 'react-router-dom';
+import PerroForm from './templates/FormAdopcion';
+import email from './assets/img/correo.png';
 import "./assets/css/style_navbar.css";
 import "./assets/css/styleHome.css";
-import garritas1 from './assets/img/garritas.jpg';
-import garritas2 from './assets/img/garritas2.jpg';
 import Login from './templates/login';
+import Home from './templates/Home';
+import  Perros from './templates/Perros';
+import Gatos from './templates/Gatos';
+import Buzon from './templates/autenticate/BuzonDePeticiones';
+import AdminA from './templates/autenticate/AdminAnimales';
+import AgregaA from './templates/autenticate/AgregarAnimalito';
+import EditarAnimal from './templates/autenticate/EditarAnimal';
+import FormAdopcion from './templates/FormAdopcion';
 
-function App() {
+function Navbar() {
+  const navigate = useNavigate();
+  const user = localStorage.getItem('user');
 
-  const [usuario, setUsuario] = useState(null);
+  const logout = () => {
+    localStorage.removeItem('user');
+    navigate('/');
+  }
 
+  const navegar = () => {
+    navigate('/Buzon')
+  }
+  
   return (
-    <Router>
-      <div className="App">
-        <nav className="nav_bar">
+            <nav className="nav_bar">
           <div>
             <Link to="/">Garritas</Link>
           </div>
           <div>
             <Link to="/">Inicio</Link>
-            <Link to="/perros">Perros</Link>
-            <Link to="">Gatos</Link>
+            <Link to="/Perros">Perros</Link>
+            <Link to="/Gatos">Gatos</Link>
             
           </div>
           <div className="user">
-            <Link to="/login">Login</Link>
+
+            { user ? (
+              
+              <div className="box">
+                <Link to="/Agregar-Animalito">Nuevo</Link>
+                <Link to="/Administrar-Animalitos">Administrar</Link>
+                <img className="icono_email" onClick={navegar} src={email}/>              
+                <div className="user_box">
+                <h3>{ user }</h3>
+                <h3 className="logout_btn" onClick={logout}>Cerrar Sesión</h3>
+              
+              </div>
+              </div>
+
+            ): (
+
+              <div className="user_box">
+                <Link to="/login">Login</Link>
+              </div>
+            )}
+
+            
           </div>
         </nav>
-
-        <Routes>
-          <Route path="/" element={<Home/>}></Route>
-          <Route path="/perros" element={<PerroForm/>}></Route>
-          <Route path="/Login" element={<Login/>}></Route>
-        </Routes>
-
-      </div>
-    </Router>
-  );
+  )
 }
 
-function Home() {
+function App() {
+
   return (
-    
-    <div>
-      <div className="Titulo">
-        <h1>Centro de Adopcion Garritas</h1>
-      </div>
-      <div className="imagenes">
-        <div class="imagen">
-          <img className="pic" src={garritas1} alt=""/>
-        </div>
-        <div class="imagen">
-          <img className="pic" src={garritas2} alt=""/>
-        </div>
-      </div>
-      <div className="about">
-        <p>
-          <h4>¡Miau! Hola, soy Garritas y te doy la bienvenida a mi centro de adopción</h4>
-Este lugar es más que un refugio… ¡es un hogar lleno de amor, ronroneos y segundas oportunidades! En el Centro de Adopción "Garritas", cuidamos a gatitos y perritos que han pasado por momentos difíciles, pero que ahora están listos para encontrar un nuevo hogar lleno de cariño.
-<br/><br/>
-Tenemos compañeros peludos de todas las edades y personalidades: curiosos, dormilones, juguetones y súper amorosos… ¡uno de ellos podría ser tu mejor amigo para toda la vida!
-        </p>
-      </div>
-    </div>
-  )
+    <>
+    <Router>
+      <Navbar/>
+        <Routes>
+          <Route path="/" element={<Home/>}></Route>
+          <Route path="/Perros" element={<Perros/>}></Route>
+          <Route path="/Login" element={<Login/>}></Route>
+          <Route path="/Gatos" element={<Gatos/>}></Route>
+          <Route path="/Buzon" element={<Buzon/>}></Route>
+          <Route path="/Administrar-Animalitos" element={<AdminA/>}></Route>
+          <Route path="/Agregar-Animalito" element={<AgregaA/>}></Route>
+          <Route path="/editar/:tipo/:id" element={<EditarAnimal />} />
+          <Route path="/adoptar/:id_perro" element={<FormAdopcion />} />
+        </Routes>
+    </Router>
+    </>
+  );
 }
 
 export default App;

@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import "../assets/css/styleLogin.css";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+
+    const navigate = useNavigate();
+
     
     const [username, setUsername] = useState('');
     const [password, setpassword] = useState('');
@@ -18,6 +22,9 @@ function Login() {
         .then(data => {
             if(!data.error){
                 alert("Inicio de sesion exitoso");
+                console.log(data['user']);
+                localStorage.setItem('user', data['user']);
+                navigate('/');
             } else {
                 alert(data.error)
             }

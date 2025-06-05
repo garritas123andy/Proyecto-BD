@@ -19,3 +19,43 @@ a:hover{
 .user{
     margin-left: auto;
 }
+
+.user_box{
+    display: flex;
+    border: 2px solid #000;
+    border-radius: 9px;
+    background-color: #000;
+    color: #fff;
+}
+
+.user_box a{
+    color: #fff;
+}
+
+.user_box h3{
+    margin: 5px;
+}
+
+.user_box button{
+    background: none;
+    border: 1px #000 solid;
+}
+
+.logout_btn:hover{
+    cursor: pointer;
+    color: red;
+}
+
+.box{
+    display: flex;
+}
+
+.icono_email{
+    width: 40px;
+    margin: 0 10px;
+}
+
+.icono_email:hover{
+    cursor: pointer;
+    
+}
