@@ -93,6 +93,17 @@ def obtener_perros():
     conn.close()
     return jsonify(perros)
 
+@app.route('/api/gatos')
+def obtener_gatos():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM gatos WHERE estado_adopcion = 'Disponible'")
+    gatos = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return jsonify(gatos)
+
+
 @app.route('/api/solicitudes', methods=['POST'])
 def registrar_solicitud():
     data = request.get_json()
@@ -130,6 +141,48 @@ def registrar_solicitud():
         return jsonify({'mensaje': 'Solicitud registrada correctamente'}), 201
     except Exception as e:
         print("Error al guardar solicitud:", e)
+        return jsonify({'error': 'Error interno del servidor'}), 500
+
+
+@app.route('/api/nuevoperro', methods=['POST'])
+def nuevo_perro():
+    data = request.get_json()
+
+    nombre = data.get('nombre')
+    raza = data.get('raza')
+    edad = data.get('edad')
+    tamaño = data.get('tamaño')
+    estado_salud = data.get('estado_salud')
+    fecha_registro = datetime.now().strftime('%Y-%m-%d')
+    estado_adopcion = data.get('estado_adopcion')
+    descripcion = data.get('descripcion')
+    
+    if not all([nombre, raza, edad, tamaño, estado_salud, fecha_registro, estado_adopcion]):
+        return jsonify({'error': 'Faltan campos obligatorios'}), 400
+
+    try:
+        conn = get_db_connection()
+        conn.execute(
+            """
+            INSERT INTO perros (
+                nombre,
+                raza,
+                edad,
+                tamaño,
+                estado_salud,
+                fecha_registro,
+                estado_adopcion,
+                descripcion
+                
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (nombre, raza, edad, tamaño, estado_salud, fecha_registro, estado_adopcion, descripcion)
+        )
+        conn.commit()
+        conn.close()
+        return jsonify({'mensaje': 'Perro registrado correctamente'}), 201
+    except Exception as e:
+        print("Error al guardar perro:", e)
         return jsonify({'error': 'Error interno del servidor'}), 500
 
 
