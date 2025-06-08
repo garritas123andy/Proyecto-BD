@@ -4,7 +4,7 @@ function AdminAnimales() {
     const [animales, setAnimales] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/animales") // Ajusta el URL a tu backend
+        fetch("http://localhost:5000/animales")
             .then(res => res.json())
             .then(data => setAnimales(data))
             .catch(err => console.error("Error al cargar animales:", err));
