@@ -184,7 +184,7 @@ def declinar_peticion(id):
 @app.route('/api/nuevoperro', methods=['POST'])
 def nuevo_perro():
     data = request.get_json()
-
+    animalito = data.get('animalito')
     nombre = data.get('nombre')
     raza = data.get('raza')
     edad = data.get('edad')
@@ -199,25 +199,44 @@ def nuevo_perro():
 
     try:
         conn = get_db_connection()
-        conn.execute(
-            """
-            INSERT INTO perros (
-                nombre,
-                raza,
-                edad,
-                tamaño,
-                estado_salud,
-                fecha_registro,
-                estado_adopcion,
-                descripcion
-                
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            (nombre, raza, edad, tamaño, estado_salud, fecha_registro, estado_adopcion, descripcion)
-        )
+        if animalito == 'perro':
+            conn.execute(
+                """
+                INSERT INTO perros (
+                    nombre,
+                    raza,
+                    edad,
+                    tamaño,
+                    estado_salud,
+                    fecha_registro,
+                    estado_adopcion,
+                    descripcion
+                    
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (nombre, raza, edad, tamaño, estado_salud, fecha_registro, estado_adopcion, descripcion)
+            )
+        else:
+            conn.execute(
+                """
+                INSERT INTO gatos (
+                    nombre,
+                    raza,
+                    edad,
+                    tamaño,
+                    estado_salud,
+                    fecha_registro,
+                    estado_adopcion,
+                    descripcion
+                    
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (nombre, raza, edad, tamaño, estado_salud, fecha_registro, estado_adopcion, descripcion)
+            )
+
         conn.commit()
         conn.close()
-        return jsonify({'mensaje': 'Perro registrado correctamente'}), 200
+        return jsonify({'mensaje': 'Animalito registrado correctamente'}), 200
     except Exception as e:
         print("Error al guardar perro:", e)
         return jsonify({'error': 'Error interno del servidor'}), 500
