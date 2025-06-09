@@ -47,7 +47,7 @@ function EditarAnimal() {
     return (
         <div>
             <h3>Editar {tipo.charAt(0).toUpperCase() + tipo.slice(1)}</h3>
-            <form onSubmit={handleSubmit}>
+            <form className="form-nuevo-perro" onSubmit={handleSubmit}>
                 <input name="nombre" value={animal.nombre} onChange={handleChange} placeholder="Nombre" required /><br/>
                 <input name="raza" value={animal.raza} onChange={handleChange} placeholder="Raza" /><br/>
                 <input name="edad" type="number" value={animal.edad} onChange={handleChange} placeholder="Edad" /><br/>

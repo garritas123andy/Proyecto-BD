@@ -33,11 +33,11 @@ function AdminAnimales() {
                 <thead>
                     <tr>
                         <th>Tipo</th>
-                        <th>Nombre</th>
+                        <th className="none">Nombre</th>
                         <th>Raza</th>
-                        <th>Edad</th>
-                        <th>Tamaño</th>
-                        <th>Estado Salud</th>
+                        <th className="none">Edad</th>
+                        <th className="none">Tamaño</th>
+                        <th className="none">Estado Salud</th>
                         <th>Estado Adopción</th>
                         <th>Acciones</th>
                     </tr>
@@ -46,11 +46,11 @@ function AdminAnimales() {
                     {animales.map(animal => (
                         <tr key={`${animal.tipo}-${animal.id}`}>
                             <td>{animal.tipo}</td>
-                            <td>{animal.nombre}</td>
+                            <td className="none">{animal.nombre}</td>
                             <td>{animal.raza}</td>
-                            <td>{animal.edad}</td>
-                            <td>{animal.tamaño}</td>
-                            <td>{animal.estado_salud}</td>
+                            <td className="none">{animal.edad}</td>
+                            <td className="none">{animal.tamaño}</td>
+                            <td className="none">{animal.estado_salud}</td>
                             <td>{animal.estado_adopcion}</td>
                             <td>
                                 <button onClick={() => window.location.href = `/editar/${animal.tipo}/${animal.id}`}>Editar</button>

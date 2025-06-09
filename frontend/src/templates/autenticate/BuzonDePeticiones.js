@@ -51,11 +51,11 @@ function BuzonDePeticiones() {
         <thead >
           <tr>
             <th>Solicitante</th>
-            <th>Email</th>
+            <th className='none'>Email</th>
             <th>Teléfono</th>
-            <th>Dirección</th>
-            <th>ID Mascota</th>
-            <th>Fecha</th>
+            <th className='none'>Dirección</th>
+            <th className='none'>ID Mascota</th>
+            <th className='none'>Fecha</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -63,11 +63,11 @@ function BuzonDePeticiones() {
           {peticiones.map((p) => (
             <tr key={p.id} >
               <td>{p.nombre_solicitante}</td>
-              <td>{p.email}</td>
+              <td className='none'>{p.email}</td>
               <td>{p.telefono}</td>
-              <td>{p.direccion}</td>
-              <td>{p.id_mascota}</td>
-              <td>{p.fecha_peticion}</td>
+              <td className='none'>{p.direccion}</td>
+              <td className='none'>{p.id_mascota}</td>
+              <td className='none'>{p.fecha_peticion}</td>
               <td >
                 <button
                   onClick={() => actualizarEstado(p.id, p.id_mascota, 'aceptar')}

@@ -30,3 +30,7 @@ h1 {
 .pag{
     margin: 90px;
 }
+
+@media (max-width: 450px){
+    
+}

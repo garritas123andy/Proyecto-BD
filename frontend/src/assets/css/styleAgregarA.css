@@ -5,7 +5,7 @@ h2{
 .form-nuevo-perro{
     display: flex;
     flex-direction: column;
-    width: 600px;
+    max-width: 600px;
     padding: 50px;
     box-shadow: 0 0 10px #000;
     margin: auto;

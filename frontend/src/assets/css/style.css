@@ -1,0 +1,95 @@
+.menu{
+    display: none;
+}
+
+@media (max-width: 450px){
+    .nav_bar{
+        display: none;
+    }
+
+    .navbarEscri{
+        display: flex;
+        align-items: center;
+        background-color: antiquewhite;
+        padding: 10px;
+    }
+
+    .menu{
+        display: flex;
+        margin-left: auto;
+        background-color: antiquewhite;
+        border: none;
+    }
+    h5 {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .navbarMovil{
+        background-color: antiquewhite;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 250px;
+        box-shadow: 0 0 10px #000;
+    }
+
+    .navbarMovil .menu{
+        margin: 20px;
+
+    }
+
+    .navbarMovil .options{
+        display: flex;
+        flex-direction: column;
+        font-size: 30px;
+        margin-left: 20px;
+    }
+
+    .user{
+        margin: 20px;
+    }
+
+    .user .box{
+        display: flex;
+        flex-direction: column;
+        font-size: 30px;
+    }
+
+    .user_box{
+        display: flex;
+        flex-direction: column;
+        font-size: 15px;
+        background-color: #0000;
+        border: none;
+    }
+
+    .user_box h3{
+        background-color: #000;
+        padding: 8px;
+        border-radius: 9px;
+    }
+
+    .pic{
+        margin: 2px 0;
+    }
+
+    .pag{
+        margin: 15px;
+    }
+
+    .Titulo{
+        margin: 2px 0;
+    }
+
+    .form-nuevo-perro{
+        width: 270px;
+    }
+
+    .none{
+        display: none;
+    }
+
+
+}
