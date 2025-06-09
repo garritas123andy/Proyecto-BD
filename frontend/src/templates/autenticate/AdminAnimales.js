@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "../../assets/css/styleAdminA.css";
 
 function AdminAnimales() {
     const [animales, setAnimales] = useState([]);
@@ -28,7 +29,7 @@ function AdminAnimales() {
     return (
         <div>
             <h3>Administración de Animales</h3>
-            <table border="1" cellPadding="8">
+            <table>
                 <thead>
                     <tr>
                         <th>Tipo</th>
@@ -53,7 +54,7 @@ function AdminAnimales() {
                             <td>{animal.estado_adopcion}</td>
                             <td>
                                 <button onClick={() => window.location.href = `/editar/${animal.tipo}/${animal.id}`}>Editar</button>
-                                <button onClick={() => eliminarAnimal(animal.tipo, animal.id)}>Eliminar</button>
+                                <button className="btn-delete" onClick={() => eliminarAnimal(animal.tipo, animal.id)}>Eliminar</button>
                             </td>
                         </tr>
                     ))}

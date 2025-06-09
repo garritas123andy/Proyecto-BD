@@ -1,0 +1,55 @@
+.box-dad{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 30px auto;
+    box-shadow: 0 0 10px #000;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+h3{
+    text-align: center;
+}
+
+.box-animal{
+    width: 200px;
+    text-align: center;
+    padding: 20px;
+}
+
+.sn-image{
+    width: 120px;
+}
+
+.filtros{
+    display: flex;
+    justify-content: center;
+}
+.filtros button{
+    margin: 0 15px;
+    padding: 2px 5px;
+    border-radius: 9px;
+    background-color: #000;
+    color: #fff;
+}
+
+.filtros button:hover{
+    cursor: pointer;
+}
+
+.box-animal button{
+    padding: 5px 8px;
+    border-radius: 9px;
+    background-color: #fff;
+}
+
+.box-animal button:hover{
+    cursor: pointer;
+    color: #555;
+}
+
+.box-animal button:active{
+    background-color: #ddd;
+}

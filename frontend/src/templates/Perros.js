@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import '../assets/css/styleAnimal.css';
+import sn from '../assets/img/sn-image.jpg';
 
 function Perros() {
   const [perros, setPerros] = useState([]);
@@ -27,25 +29,26 @@ function Perros() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div>
       <h3>CATÁLOGO DE PERROS EN ADOPCIÓN</h3>
 
-      <div style={{ margin: "10px 0" }}>
+      <div className="filtros">
         <button onClick={() => setFiltro("todos")}>Todos</button>
         <button onClick={() => setFiltro("pequeño")}>Pequeño</button>
         <button onClick={() => setFiltro("mediano")}>Mediano</button>
         <button onClick={() => setFiltro("grande")}>Grande</button>
       </div>
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
+      <div className="box-dad">
         {filtrarPerros().length === 0 ? (
           <p>No hay perros disponibles para este filtro.</p>
         ) : (
           filtrarPerros().map((perro) => (
             <div
               key={perro.id_perro}
+              className="box-animal"
             >
-              <img src={perro.imagen} alt={perro.nombre} />
+              <img className="sn-image" src={sn} alt={perro.nombre} />
               <h4>{perro.nombre}</h4>
               <p>
                 <strong>Salud:</strong> {perro.estado_salud}
@@ -55,8 +58,7 @@ function Perros() {
               </p>
 
               <button
-                style={{ marginTop: "10px" }}
-                onClick={() => navigate(`/adoptar/${perro.id_perro}`)}
+                onClick={() => navigate(`/adoptar/${perro.id_perro}/${"perro"}`)}
               >
                 Adoptar
               </button>

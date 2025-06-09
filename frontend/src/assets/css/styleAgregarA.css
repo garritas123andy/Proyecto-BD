@@ -1,0 +1,46 @@
+h2{
+    text-align: center;
+}
+
+.form-nuevo-perro{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    padding: 50px;
+    box-shadow: 0 0 10px #000;
+    margin: auto;
+    border-radius: 9px;
+}
+
+.form-nuevo-perro input{
+    margin: 15px 0;
+    padding: 5px;
+    border-radius: 9px;
+    border: none;
+    border-bottom: 2px solid #000;
+}
+
+.form-nuevo-perro select{
+    margin: 15px 0;
+    padding: 5px;
+    border-radius: 9px;
+    border: 2px solid #000;
+}
+
+.form-nuevo-perro button{
+    margin: 15px 0;
+    padding: 5px;
+    border-radius: 9px;
+    background-color: #000;
+    color: #fff;
+}
+
+.form-nuevo-perro button:hover{
+    cursor: pointer;
+}
+
+.form-nuevo-perro textarea{
+    resize: none;
+    padding: 5px;
+
+}

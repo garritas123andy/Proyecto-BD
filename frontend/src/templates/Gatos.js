@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import '../assets/css/styleAnimal.css';
+import sn from '../assets/img/sn-image.jpg';
 
 function Gatos() {
     const [gatos, setGatos] = useState([]);
@@ -27,25 +29,26 @@ function Gatos() {
     };
     
     return (
-        <div style={{ padding: "20px" }}>
+        <div>
         <h3>CATÁLOGO DE GATOS EN ADOPCIÓN</h3>
     
-        <div style={{ margin: "10px 0" }}>
+        <div className="filtros">
             <button onClick={() => setFiltro("todos")}>Todos</button>
             <button onClick={() => setFiltro("pequeño")}>Pequeño</button>
             <button onClick={() => setFiltro("mediano")}>Mediano</button>
             <button onClick={() => setFiltro("grande")}>Grande</button>
         </div>
     
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
+        <div className="box-dad">
             {filtrarGatos().length === 0 ? (
             <p>No hay gatos disponibles para este filtro.</p>
             ) : (
             filtrarGatos().map((gato) => (
                 <div
                 key={gato.id_gato}
+              className="box-animal"
                 >
-                <img src={gato.imagen} alt={gato.nombre} />
+                <img className="sn-image" src={sn} alt={gato.nombre} />
                 <h4>{gato.nombre}</h4>
                 <p>
                     <strong>Salud:</strong> {gato.estado_salud}
@@ -55,8 +58,7 @@ function Gatos() {
                 </p>
     
                 <button
-                    style={{ marginTop: "10px" }}
-                    onClick={() => navigate(`/adoptar/${gato.id_gato}`)}
+                    onClick={() => navigate(`/adoptar/${gato.id_gato}/${"gato"}`)}
                 >
                     Adoptar
                 </button>

@@ -81,7 +81,7 @@ function App() {
           <Route path="/Administrar-Animalitos" element={<AdminA/>}></Route>
           <Route path="/Agregar-Animalito" element={<AgregaA/>}></Route>
           <Route path="/editar/:tipo/:id" element={<EditarAnimal />} />
-          <Route path="/adoptar/:id_perro" element={<FormAdopcion />} />
+          <Route path="/adoptar/:id/:animal" element={<FormAdopcion />} />
         </Routes>
     </Router>
     </>

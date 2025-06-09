@@ -107,12 +107,12 @@ def obtener_gatos():
 @app.route('/api/solicitudes', methods=['POST'])
 def registrar_solicitud():
     data = request.get_json()
-
+    animal = data.get('animal');
     nombre = data.get('nombre')
     telefono = data.get('telefono')
     direccion = data.get('direccion')
     email = data.get('email')
-    id_perro = data.get('id_perro')
+    id_perro = data.get('id')
     fecha_actual = datetime.now().strftime('%Y-%m-%d')
     
     if not all([nombre, telefono, direccion, email, id_perro]):
@@ -130,11 +130,10 @@ def registrar_solicitud():
                 tipo_mascota,
                 id_mascota,
                 estado,
-                fecha_peticion,
-                id_usuario
-            ) VALUES (?, ?, ?, ?, 'perro', ?, 'pendiente', ?, ?)
+                fecha_peticion
+            ) VALUES (?, ?, ?, ?, ?, ?, 'pendiente', ? )
             """,
-            (nombre, email, telefono, direccion, id_perro, fecha_actual, id_usuario)
+            (nombre, email, telefono, direccion, animal, id_perro, fecha_actual )
         )
         conn.commit()
         conn.close()
@@ -142,6 +141,44 @@ def registrar_solicitud():
     except Exception as e:
         print("Error al guardar solicitud:", e)
         return jsonify({'error': 'Error interno del servidor'}), 500
+
+
+@app.route('/api/peticiones', methods=['GET'])
+def obtener_peticiones():
+    conn = get_db_connection()
+    peticiones = conn.execute(
+        "SELECT * FROM peticiones_adopcion WHERE estado = 'pendiente'"
+    ).fetchall()
+    conn.close()
+    return jsonify([dict(p) for p in peticiones])
+
+@app.route('/api/peticion/<int:id>/aceptar', methods=['POST'])
+def aceptar_peticion(id):
+    data = request.get_json()
+    id_mascota = data.get('id_mascota')
+
+    try:
+        conn = get_db_connection()
+        conn.execute("UPDATE peticiones_adopcion SET estado = 'aprobado' WHERE id = ?", (id,))
+        conn.execute("UPDATE perros SET estado_adopcion = 'Adoptado' WHERE id = ?", (id_mascota,))
+        conn.commit()
+        conn.close()
+        return jsonify({'mensaje': 'Petición aceptada y mascota marcada como adoptada'})
+    except Exception as e:
+        print(e)
+        return jsonify({'error': 'Error en el servidor'}), 500
+
+@app.route('/api/peticion/<int:id>/declinar', methods=['POST'])
+def declinar_peticion(id):
+    try:
+        conn = get_db_connection()
+        conn.execute("DELETE FROM peticiones_adopcion WHERE id = ?", (id,))
+        conn.commit()
+        conn.close()
+        return jsonify({'mensaje': 'Petición eliminada correctamente'})
+    except Exception as e:
+        print(e)
+        return jsonify({'error': 'Error al eliminar la petición'}), 500
 
 
 @app.route('/api/nuevoperro', methods=['POST'])
@@ -180,7 +217,7 @@ def nuevo_perro():
         )
         conn.commit()
         conn.close()
-        return jsonify({'mensaje': 'Perro registrado correctamente'}), 201
+        return jsonify({'mensaje': 'Perro registrado correctamente'}), 200
     except Exception as e:
         print("Error al guardar perro:", e)
         return jsonify({'error': 'Error interno del servidor'}), 500

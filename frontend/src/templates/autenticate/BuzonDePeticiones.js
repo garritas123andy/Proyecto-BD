@@ -1,13 +1,95 @@
-import { React } from "react";
+import React, { useEffect, useState } from 'react';
 
 function BuzonDePeticiones() {
-    
+  const [peticiones, setPeticiones] = useState([]);
+  const [mensaje, setMensaje] = useState('');
 
-    return (
-        <div>
-            <h2>Este es el buzon</h2>
-        </div>
-    )
+  useEffect(() => {
+    fetchPeticiones();
+  }, []);
+
+  const fetchPeticiones = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/api/peticiones');
+      const data = await res.json();
+      setPeticiones(data);
+    } catch (err) {
+      console.error('Error al cargar peticiones', err);
+    }
+  };
+
+  const actualizarEstado = async (idPeticion, idMascota, accion) => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/peticion/${idPeticion}/${accion}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id_mascota: idMascota }) // por si el backend lo necesita
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setPeticiones(prev => prev.filter(p => p.id !== idPeticion));
+        setMensaje(data.mensaje || 'Estado actualizado');
+      } else {
+        setMensaje(data.error || 'Ocurrió un error');
+      }
+    } catch (err) {
+      console.error(err);
+      setMensaje('Error en la operación');
+    }
+  };
+
+  return (<div>
+  <h2 >Buzón de Adopciones</h2>
+  {mensaje && <p className="text-green-600 mb-4">{mensaje}</p>}
+
+  {peticiones.length === 0 ? (
+    <p>No hay peticiones pendientes.</p>
+  ) : (
+    <div >
+      <table>
+        <thead >
+          <tr>
+            <th>Solicitante</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>ID Mascota</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {peticiones.map((p) => (
+            <tr key={p.id} >
+              <td>{p.nombre_solicitante}</td>
+              <td>{p.email}</td>
+              <td>{p.telefono}</td>
+              <td>{p.direccion}</td>
+              <td>{p.id_mascota}</td>
+              <td>{p.fecha_peticion}</td>
+              <td >
+                <button
+                  onClick={() => actualizarEstado(p.id, p.id_mascota, 'aceptar')}
+                  >
+                  Aceptar
+                </button>
+                <button
+                  onClick={() => actualizarEstado(p.id, p.id_mascota, 'declinar')}
+                  className="btn-delete"
+                >
+                  Declinar
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+</div>
+
+  );
 }
 
 export default BuzonDePeticiones;

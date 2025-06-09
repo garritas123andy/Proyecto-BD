@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import "../assets/css/styleadopcion.css";
 
 function FormAdopcion() {
-  const { id_perro } = useParams();
+  const { id, animal } = useParams();
   const [nombre, setNombre] = useState("");
   const [telefono, setTelefono] = useState("");
   const [direccion, setDireccion] = useState("");
@@ -18,7 +19,8 @@ function FormAdopcion() {
         telefono,
         direccion,
         email,
-        id_perro: parseInt(id_perro),
+        id: parseInt(id),
+        animal,
       }),
     })
       .then((res) => {
@@ -29,10 +31,10 @@ function FormAdopcion() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="target">
       <h3>Formulario de Solicitud de Adopción</h3>
-      <form onSubmit={enviarSolicitud}>
-        <p>Solicitas adoptar al perro con ID: {id_perro}</p>
+      <form onSubmit={enviarSolicitud} className="target-form">
+        <p>Solicitas adoptar al {animal} con ID: {id}</p>
         <input
           type="text"
           placeholder="Tu nombre"
