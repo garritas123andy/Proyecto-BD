@@ -1,10 +1,14 @@
-.menu{
+.menu, .mmm{
     display: none;
 }
 
 @media (max-width: 450px){
     .nav_bar{
         display: none;
+    }
+
+    .mmm{
+        display: flex;
     }
 
     .navbarEscri{
@@ -19,6 +23,7 @@
         margin-left: auto;
         background-color: antiquewhite;
         border: none;
+        color: #000;
     }
     h5 {
         font-size: 20px;
@@ -47,6 +52,15 @@
         margin-left: 20px;
     }
 
+    .full{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #000;
+    }
+
     .user{
         margin: 20px;
     }
@@ -65,7 +79,7 @@
         border: none;
     }
 
-    .user_box h3{
+    .user_box h3, .user_box a {
         background-color: #000;
         padding: 8px;
         border-radius: 9px;
@@ -85,6 +99,14 @@
 
     .form-nuevo-perro{
         width: 270px;
+    }
+
+    .target-form{
+        width: 320px;
+    }
+
+    .cuadroLogin{
+        width:300px;
     }
 
     .none{

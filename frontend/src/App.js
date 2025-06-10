@@ -24,10 +24,12 @@ function Navbar() {
   const logout = () => {
     localStorage.removeItem('user');
     navigate('/');
+    toggleMenu();
   }
 
   const navegar = () => {
-    navigate('/Buzon')
+    navigate('/Buzon');
+    toggleMenu();
   }
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -69,7 +71,7 @@ function Navbar() {
             
           </div>
             </nav>
-            <h5>Garritas</h5>
+            <h5 className="mmm">Garritas</h5>
             <button onClick={toggleMenu} className="menu" aria-label="Toggle menu">
           {isOpen ? <X size={35} /> : <Menu size={35} />}
           </button>
@@ -79,9 +81,9 @@ function Navbar() {
           {isOpen ? <X size={35} /> : <Menu size={35} />}
           </button>
           <div className="options">
-            <Link to="/">Inicio</Link>
-            <Link to="/Perros">Perros</Link>
-            <Link to="/Gatos">Gatos</Link>
+            <Link onClick={toggleMenu} to="/">Inicio</Link>
+            <Link onClick={toggleMenu} to="/Perros">Perros</Link>
+            <Link onClick={toggleMenu} to="/Gatos">Gatos</Link>
             
           </div>
           <div className="user">
@@ -89,8 +91,8 @@ function Navbar() {
             { user ? (
               
               <div className="box">
-                <Link to="/Agregar-Animalito">Nuevo</Link>
-                <Link to="/Administrar-Animalitos">Administrar</Link>
+                <Link onClick={toggleMenu} to="/Agregar-Animalito">Nuevo</Link>
+                <Link onClick={toggleMenu} to="/Administrar-Animalitos">Administrar</Link>
                 <img className="icono_email" onClick={navegar} src={email}/>              
                 <div className="user_box">
                 <h3>{ user }</h3>
@@ -102,7 +104,7 @@ function Navbar() {
             ): (
 
               <div className="user_box">
-                <Link to="/login">Login</Link>
+                <Link onClick={toggleMenu} to="/login">Login</Link>
               </div>
             )}
 
