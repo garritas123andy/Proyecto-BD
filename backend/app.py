@@ -160,7 +160,7 @@ def aceptar_peticion(id):
     try:
         conn = get_db_connection()
         conn.execute("UPDATE peticiones_adopcion SET estado = 'aprobado' WHERE id = ?", (id,))
-        conn.execute("UPDATE perros SET estado_adopcion = 'Adoptado' WHERE id = ?", (id_mascota,))
+        conn.execute("UPDATE perros SET estado_adopcion = 'Adoptado' WHERE id_perro = ?", (id_mascota,))
         conn.commit()
         conn.close()
         return jsonify({'mensaje': 'Petición aceptada y mascota marcada como adoptada'})

@@ -29,7 +29,6 @@ function Navbar() {
 
   const navegar = () => {
     navigate('/Buzon');
-    toggleMenu();
   }
 
   const toggleMenu = () => setIsOpen(!isOpen);

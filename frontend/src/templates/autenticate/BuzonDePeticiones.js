@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import "../../assets/css/sstyleBuzon.css";
 
 function BuzonDePeticiones() {
   const [peticiones, setPeticiones] = useState([]);
@@ -41,10 +42,10 @@ function BuzonDePeticiones() {
 
   return (<div>
   <h2 >Buzón de Adopciones</h2>
-  {mensaje && <p className="text-green-600 mb-4">{mensaje}</p>}
+  {mensaje && <p className="alerta-true">{mensaje}</p>}
 
   {peticiones.length === 0 ? (
-    <p>No hay peticiones pendientes.</p>
+    <p className='alerta-false'>No hay peticiones pendientes.</p>
   ) : (
     <div >
       <table>
