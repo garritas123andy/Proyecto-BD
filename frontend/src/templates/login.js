@@ -12,7 +12,7 @@ function Login() {
 
     const handleLogin = async () => {
 
-        const res = await fetch('http://localhost:5000/login', {
+        const res = await fetch('/login', {
             method: 'POST',
             credentials: 'include',
             headers: { 'content-type': 'application/json' },
