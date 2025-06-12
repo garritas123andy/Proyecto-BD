@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Garriload from "../../assets/img/garritas2.jpg";
 
 function EditarAnimal() {
     const { tipo, id } = useParams();
     const navigate = useNavigate();
+            const [isLoading, setIsLoading] = useState(false);
     const [animal, setAnimal] = useState({
         nombre: "",
         raza: "",
@@ -14,13 +16,17 @@ function EditarAnimal() {
     });
 
     useEffect(() => {
-        fetch(`http://localhost:5000/animales`)
+        
+    setIsLoading(true);
+        fetch(`http://localhost:5000/api/animales`)
             .then(res => res.json())
             .then(data => {
                 const encontrado = data.find(a => a.tipo === tipo && a.id.toString() === id);
                 if (encontrado) setAnimal(encontrado);
                 else alert("Animal no encontrado");
-            });
+            })
+            .finally( load => 
+    setIsLoading(false));
     }, [tipo, id]);
 
     const handleChange = e => {
@@ -28,8 +34,10 @@ function EditarAnimal() {
     };
 
     const handleSubmit = e => {
+        
+        setIsLoading(true);
         e.preventDefault();
-        fetch(`http://localhost:5000/animales/${tipo}/${id}`, {
+        fetch(`http://localhost:5000/api/animales/${tipo}/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(animal)
@@ -41,7 +49,9 @@ function EditarAnimal() {
             } else {
                 alert("Error al actualizar");
             }
-        });
+        })
+        .finally ( load => 
+    setIsLoading(false));
     };
 
     return (
@@ -59,6 +69,14 @@ function EditarAnimal() {
                 </select><br/><br/>
                 <button type="submit">Guardar Cambios</button>
             </form>
+                    {isLoading && (
+                                                <div class="screenLoad">
+                                                    <div className="center">
+                                                        <img className="rueda" src={Garriload} alt="carga" />
+                                                        <h4>Cargando...</h4>
+                                                    </div>
+                                                </div>
+                                              )}
         </div>
     );
 }

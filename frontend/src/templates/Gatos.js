@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../assets/css/styleAnimal.css';
 import sn from '../assets/img/sn-image.jpg';
+import Garriload from "../assets/img/garritas2.jpg";
 
 function Gatos() {
     const [gatos, setGatos] = useState([]);
     const [filtro, setFiltro] = useState("todos");
+            const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     
     useEffect(() => {
+        
+        setIsLoading(true);
         fetch("http://localhost:5000/api/gatos")
         .then((res) => {
             if (!res.ok) throw new Error("Error al cargar datos");
@@ -18,7 +22,8 @@ function Gatos() {
         .catch((err) => {
             console.error("Error al cargar gatos:", err);
             setGatos([]);
-        });
+        })
+        .finally(load => setIsLoading(false));
     }, []);
     
     const filtrarGatos = () => {
@@ -66,6 +71,14 @@ function Gatos() {
             ))
             )}
         </div>
+                {isLoading && (
+                                            <div class="screenLoad">
+                                                <div className="center">
+                                                    <img className="rueda" src={Garriload} alt="carga" />
+                                                    <h4>Cargando...</h4>
+                                                </div>
+                                            </div>
+                                          )}
         </div>
     );
 }

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import '../../assets/css/styleAgregarA.css';
+import Garriload from "../../assets/img/garritas2.jpg";
 
 const NuevoPerroForm = () => {
+  
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     animalito: '',
     nombre: '',
@@ -28,6 +31,7 @@ const NuevoPerroForm = () => {
     e.preventDefault();
     setMensaje('');
     setError('');
+    setIsLoading(true);
 
     try {
       const res = await fetch('http://localhost:5000/api/nuevoperro', {
@@ -56,6 +60,10 @@ const NuevoPerroForm = () => {
       }
     } catch (err) {
         setError('Error al conectar con el servidor');
+    }
+    finally {
+      
+        setIsLoading(false);
     }
   };
 
@@ -90,6 +98,14 @@ const NuevoPerroForm = () => {
             <textarea name="descripcion" placeholder="Descripción" value={formData.descripcion} onChange={handleChange} rows="3" />
             <button type="submit" >Registrar</button>
         </form>
+        {isLoading && (
+                <div class="screenLoad">
+                    <div className="center">
+                        <img className="rueda" src={Garriload} alt="carga" />
+                        <h4>Cargando...</h4>
+                    </div>
+                </div>
+              )}
     </div>
   );
 };

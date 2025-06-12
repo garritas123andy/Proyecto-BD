@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import "../assets/css/styleadopcion.css";
+import Garriload from "../assets/img/garritas2.jpg";
 
 function FormAdopcion() {
   const { id, animal } = useParams();
@@ -8,8 +9,11 @@ function FormAdopcion() {
   const [telefono, setTelefono] = useState("");
   const [direccion, setDireccion] = useState("");
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const enviarSolicitud = (e) => {
+    
+    setIsLoading(true);
     e.preventDefault();
     fetch("http://localhost:5000/api/solicitudes", {
       method: "POST",
@@ -27,7 +31,9 @@ function FormAdopcion() {
         if (!res.ok) throw new Error("Error al enviar solicitud");
         alert("Solicitud enviada correctamente");
       })
-      .catch((err) => alert("Error:", err));
+      .catch((err) => alert("Error:", err))
+      .finally( load => 
+    setIsLoading(false));
   };
 
   return (
@@ -64,6 +70,14 @@ function FormAdopcion() {
         />
         <button type="submit">Enviar Solicitud</button>
       </form>
+              {isLoading && (
+                                          <div class="screenLoad">
+                                              <div className="center">
+                                                  <img className="rueda" src={Garriload} alt="carga" />
+                                                  <h4>Cargando...</h4>
+                                              </div>
+                                          </div>
+                                        )}
     </div>
   );
 }

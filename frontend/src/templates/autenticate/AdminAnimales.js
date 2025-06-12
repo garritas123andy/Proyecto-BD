@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "../../assets/css/styleAdminA.css";
+import Garriload from "../../assets/img/garritas2.jpg";
 
 function AdminAnimales() {
     const [animales, setAnimales] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        fetch("http://localhost:5000/animales")
+        setIsLoading(true);
+        fetch("http://localhost:5000/api/animales")
             .then(res => res.json())
             .then(data => setAnimales(data))
-            .catch(err => console.error("Error al cargar animales:", err));
+            .catch(err => console.error("Error al cargar animales:", err))
+            .finally( load => setIsLoading(false));
     }, []);
 
     const eliminarAnimal = (tipo, id) => {
         if (window.confirm("¿Estás seguro de eliminar este animal?")) {
-            fetch(`http://localhost:5000/animales/${tipo}/${id}`, {
+            fetch(`http://localhost:5000/api/animales/${tipo}/${id}`, {
                 method: "DELETE",
             })
             .then(res => {
@@ -60,6 +64,14 @@ function AdminAnimales() {
                     ))}
                 </tbody>
             </table>
+            {isLoading && (
+        <div class="screenLoad">
+            <div className="center">
+                <img className="rueda" src={Garriload} alt="carga" />
+                <h4>Cargando...</h4>
+            </div>
+        </div>
+      )}
         </div>
     );
 }

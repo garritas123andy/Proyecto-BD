@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../assets/css/styleAnimal.css';
 import sn from '../assets/img/sn-image.jpg';
+import Garriload from "../assets/img/garritas2.jpg";
 
 function Perros() {
   const [perros, setPerros] = useState([]);
   const [filtro, setFiltro] = useState("todos");
+        const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    setIsLoading(true);
     fetch("http://localhost:5000/api/perros")
       .then((res) => {
         if (!res.ok) throw new Error("Error al cargar datos");
@@ -18,7 +21,8 @@ function Perros() {
       .catch((err) => {
         console.error("Error al cargar perros:", err);
         setPerros([]);
-      });
+      })
+      .finally( load => setIsLoading(false));
   }, []);
 
   const filtrarPerros = () => {
@@ -40,7 +44,7 @@ function Perros() {
       </div>
 
       <div className="box-dad">
-        {filtrarPerros().length === 0 ? (
+        {filtrarPerros().length === 0 && !isLoading ? (
           <p>No hay perros disponibles para este filtro.</p>
         ) : (
           filtrarPerros().map((perro) => (
@@ -65,6 +69,14 @@ function Perros() {
             </div>
           ))
         )}
+        {isLoading && (
+                                    <div class="screenLoad">
+                                        <div className="center">
+                                            <img className="rueda" src={Garriload} alt="carga" />
+                                            <h4>Cargando...</h4>
+                                        </div>
+                                    </div>
+                                  )}
       </div>
     </div>
   );

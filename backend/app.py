@@ -10,7 +10,7 @@ CORS(app, supports_credentials=True)
 # --- Rutas CRUD ---
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
     data = request.json
     nombre = data.get('username')
@@ -29,7 +29,7 @@ def login():
     else:
         return jsonify({"error": "Inicio Fallido"}), 401
 
-@app.route('/animales', methods=['GET'])
+@app.route('/api/animales', methods=['GET'])
 def obtener_animales():
     conn = get_db_connection()
     perros = conn.execute('SELECT id_perro AS id, nombre, raza, edad, tamaño, estado_salud, estado_adopcion FROM perros').fetchall()
@@ -42,7 +42,7 @@ def obtener_animales():
     return jsonify(perros + gatos)
 
 # DELETE: Eliminar un animal
-@app.route('/animales/<tipo>/<int:id>', methods=['DELETE'])
+@app.route('/api/animales/<tipo>/<int:id>', methods=['DELETE'])
 def eliminar_animal(tipo, id):
     tabla = "perros" if tipo == "perro" else "gatos"
     columna_id = "id_perro" if tipo == "perro" else "id_gato"
@@ -58,7 +58,7 @@ def eliminar_animal(tipo, id):
     return '', 204
 
 # PUT: Editar un animal
-@app.route('/animales/<tipo>/<int:id>', methods=['PUT'])
+@app.route('/api/animales/<tipo>/<int:id>', methods=['PUT'])
 def editar_animal(tipo, id):
     datos = request.json
     tabla = "perros" if tipo == "perro" else "gatos"
@@ -160,7 +160,7 @@ def aceptar_peticion(id):
     try:
         conn = get_db_connection()
         conn.execute("UPDATE peticiones_adopcion SET estado = 'aprobado' WHERE id = ?", (id,))
-        conn.execute("UPDATE perros SET estado_adopcion = 'Adoptado' WHERE id_perro = ?", (id_mascota,))
+        conn.execute("UPDATE perros SET estado_adopcion = 'Adoptado' WHERE id = ?", (id_mascota,))
         conn.commit()
         conn.close()
         return jsonify({'mensaje': 'Petición aceptada y mascota marcada como adoptada'})

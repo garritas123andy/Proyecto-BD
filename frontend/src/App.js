@@ -24,7 +24,6 @@ function Navbar() {
   const logout = () => {
     localStorage.removeItem('user');
     navigate('/');
-
   }
 
   const navegar = () => {

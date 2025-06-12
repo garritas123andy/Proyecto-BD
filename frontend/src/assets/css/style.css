@@ -2,6 +2,38 @@
     display: none;
 }
 
+.screenLoad{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    background-color: #0007;
+    display: flex;
+    align-items: center;
+}
+
+.center{
+    margin: auto;
+}
+
+.rueda{
+    width: 80px;
+    height: 80px;
+    background-color: #000;
+    border-radius: 50%;
+    margin: auto;
+    animation: girar 2s linear infinite;
+}
+
+@keyframes girar {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 @media (max-width: 450px){
     .nav_bar{
         display: none;

@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import "../../assets/css/sstyleBuzon.css";
+import Garriload from "../../assets/img/garritas2.jpg";
 
 function BuzonDePeticiones() {
   const [peticiones, setPeticiones] = useState([]);
   const [mensaje, setMensaje] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    
+    setIsLoading(true);
     fetchPeticiones();
   }, []);
 
@@ -16,10 +19,15 @@ function BuzonDePeticiones() {
       setPeticiones(data);
     } catch (err) {
       console.error('Error al cargar peticiones', err);
+    } finally {
+      
+    setIsLoading(false);
     }
   };
 
   const actualizarEstado = async (idPeticion, idMascota, accion) => {
+    
+    setIsLoading(true);
     try {
       const res = await fetch(`http://localhost:5000/api/peticion/${idPeticion}/${accion}`, {
         method: 'POST',
@@ -38,14 +46,18 @@ function BuzonDePeticiones() {
       console.error(err);
       setMensaje('Error en la operación');
     }
+    finally {
+      
+    setIsLoading(false);
+    }
   };
 
   return (<div>
   <h2 >Buzón de Adopciones</h2>
-  {mensaje && <p className="alerta-true">{mensaje}</p>}
+  {mensaje && <p className="text-green-600 mb-4">{mensaje}</p>}
 
-  {peticiones.length === 0 ? (
-    <p className='alerta-false'>No hay peticiones pendientes.</p>
+  {peticiones.length === 0 && !isLoading ? (
+    <p>No hay peticiones pendientes.</p>
   ) : (
     <div >
       <table>
@@ -88,6 +100,15 @@ function BuzonDePeticiones() {
       </table>
     </div>
   )}
+
+          {isLoading && (
+                                      <div class="screenLoad">
+                                          <div className="center">
+                                              <img className="rueda" src={Garriload} alt="carga" />
+                                              <h4>Cargando...</h4>
+                                          </div>
+                                      </div>
+                                    )}
 </div>
 
   );
