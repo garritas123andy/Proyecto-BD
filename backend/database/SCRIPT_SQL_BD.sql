@@ -3,6 +3,14 @@ DROP TABLE IF EXISTS gatos;
 DROP TABLE IF EXISTS perros;
 DROP TABLE IF EXISTS adoptante;
 DROP TABLE IF EXISTS peticiones_adopcion;
+DROP TABLE IF EXISTS usuarios;
+
+-- crear tabla usuarios
+create table usuarios(
+    id_usuario INTEGER primary key autoincrement,
+    username   TEXT not null unique,
+    password   TEXT not null
+);
 
 -- Crear tabla adoptante
 CREATE TABLE adoptante (
@@ -107,3 +115,4 @@ INSERT INTO peticiones_adopcion (
 ('Miguel Ángel', 'miguel.angel@mail.com', '5558901234', 'Col. Condesa 963, CDMX', 'gato', 8, 'pendiente', '2025-06-04', 1),
 ('Valeria Pérez', 'valeria.pz@gmail.com', '5559012345', 'Av. División 258, CDMX', 'perro', 9, 'pendiente', '2025-06-04', 1),
 ('Daniela López', 'daniela.lp@hotmail.com', '5550123456', 'Calle Tlalpan 369, CDMX', 'gato', 10, 'pendiente', '2025-06-04', 1);
+|
