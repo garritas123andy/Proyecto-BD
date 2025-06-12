@@ -152,24 +152,30 @@ def obtener_peticiones():
     conn.close()
     return jsonify([dict(p) for p in peticiones])
 
-@app.route('/api/peticion/<int:id>/aceptar', methods=['POST'])
-def aceptar_peticion(id):
+@app.route('/api/peticion/<tipo>/<int:id>/aceptar', methods=['POST'])
+def aceptar_peticion(tipo, id):
     data = request.get_json()
     id_mascota = data.get('id_mascota')
 
     try:
         conn = get_db_connection()
-        conn.execute("UPDATE peticiones_adopcion SET estado = 'aprobado' WHERE id = ?", (id,))
-        conn.execute("UPDATE perros SET estado_adopcion = 'Adoptado' WHERE id = ?", (id_mascota,))
-        conn.commit()
-        conn.close()
+        if(tipo == 'perro'):
+            conn.execute("UPDATE peticiones_adopcion SET estado = 'aprobado' WHERE id = ?", (id,))
+            conn.execute("UPDATE perros SET estado_adopcion = 'Adoptado' WHERE id_perro = ?", (id_mascota,))
+            conn.commit()
+            conn.close()
+        else:
+            conn.execute("UPDATE peticiones_adopcion SET estado = 'aprobado' WHERE id = ?", (id,))
+            conn.execute("UPDATE gatos SET estado_adopcion = 'Adoptado' WHERE id_gato = ?", (id_mascota,))
+            conn.commit()
+            conn.close()            
         return jsonify({'mensaje': 'Petición aceptada y mascota marcada como adoptada'})
     except Exception as e:
         print(e)
         return jsonify({'error': 'Error en el servidor'}), 500
 
-@app.route('/api/peticion/<int:id>/declinar', methods=['POST'])
-def declinar_peticion(id):
+@app.route('/api/peticion/<tipo>/<int:id>/declinar', methods=['POST'])
+def declinar_peticion(tipo, id):
     try:
         conn = get_db_connection()
         conn.execute("DELETE FROM peticiones_adopcion WHERE id = ?", (id,))
